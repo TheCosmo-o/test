@@ -45,24 +45,24 @@
     overflow: hidden;
   }
 
-/* Ekran logowania */
+/* --- Ekran logowania --- */
 #loginScreen {
   position: absolute;
-  top: 50%;
+  top: 50%;       /* domyślnie na środku */
   left: 20px;
   transform: translateY(-50%);
   text-align: left;
   width: 300px;
   padding: 20px;
-  background: rgba(0,0,0,0.6); /* półprzezroczyste ciemne tło */
-  border: 1px solid rgba(255,255,255,0.5); /* jaśniejszy border */
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.5);
   border-radius: 8px;
-  color: #fff; /* kontrastowy biały tekst */
+  color: #fff;
 }
 
 #loginScreen h2 {
   margin: 0 0 12px 0;
-  color: #fff; /* widoczny nagłówek */
+  color: #fff;
 }
 
 #loginScreen input {
@@ -70,24 +70,43 @@
   box-sizing: border-box;
   margin: 8px 0;
   padding: 8px;
-  background: rgba(0,0,0,0.8); /* ciemne, ale nie całkowicie czarne */
-  color: #fff; /* kontrastowy tekst */
+  background: rgba(0,0,0,0.8);
+  color: #fff;
   border: 1px solid rgba(255,255,255,0.5);
   outline: none;
 }
 
 #loginScreen input::placeholder {
-  color: rgba(255,255,255,0.7); /* widoczny placeholder */
+  color: rgba(255,255,255,0.7);
 }
 
 #loginScreen button {
   width: 100%;
   padding: 8px;
-  background: #fff; /* przycisk jasny */
-  color: #000;      /* tekst przycisku czarny */
+  background: #fff;
+  color: #000;
   border: none;
   cursor: pointer;
   font-weight: bold;
+}
+
+/* --- Dostosowanie dla telefonów --- */
+@media (max-width: 768px) {
+  #loginScreen {
+    top: 20px;             /* przy górze ekranu */
+    left: 50%;             /* wyśrodkowane poziomo */
+    transform: translateX(-50%) translateY(0); /* usuń przesunięcie w pionie */
+    width: 90%;            /* szersze na małych ekranach */
+    padding: 15px;
+  }
+
+  .terminal {
+    top: auto;             /* nie nakłada się na login */
+    bottom: 20px;          /* terminal na dole ekranu */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+  }
 }
 
 
