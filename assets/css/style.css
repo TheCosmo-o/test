@@ -1,0 +1,118 @@
+ /* --- PRELOADER --- */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--primary-light);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+
+ body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-image: url(../img/login\ student.png);
+        background-size: cover;       /* wypełnia cały ekran */
+    background-position: center;  /* wyśrodkowanie obrazka */
+    background-attachment: fixed; /* opcjonalnie, tło nie przesuwa się przy scrollu */
+    color: #00ff00;
+    font-family: "Consolas", "Courier New", monospace;
+    overflow: hidden;
+  }
+
+/* Ekran logowania */
+#loginScreen {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  text-align: left;
+  width: 300px;
+  padding: 20px;
+  background: rgba(0,0,0,0.6); /* półprzezroczyste ciemne tło */
+  border: 1px solid rgba(255,255,255,0.5); /* jaśniejszy border */
+  border-radius: 8px;
+  color: #fff; /* kontrastowy biały tekst */
+}
+
+#loginScreen h2 {
+  margin: 0 0 12px 0;
+  color: #fff; /* widoczny nagłówek */
+}
+
+#loginScreen input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 8px 0;
+  padding: 8px;
+  background: rgba(0,0,0,0.8); /* ciemne, ale nie całkowicie czarne */
+  color: #fff; /* kontrastowy tekst */
+  border: 1px solid rgba(255,255,255,0.5);
+  outline: none;
+}
+
+#loginScreen input::placeholder {
+  color: rgba(255,255,255,0.7); /* widoczny placeholder */
+}
+
+#loginScreen button {
+  width: 100%;
+  padding: 8px;
+  background: #fff; /* przycisk jasny */
+  color: #000;      /* tekst przycisku czarny */
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+
+  /* Terminal */
+  .terminal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 700px;
+    display: none; /* ukryty do czasu logowania */
+  }
+
+  .line {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-bottom: 5px;
+  }
+
+  .prompt {
+    color: #00ffff; /* kolor promptu */
+  }
+
+  .error {
+    color: #ff4444; /* kolor błędów */
+  }
