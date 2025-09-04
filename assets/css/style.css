@@ -1,4 +1,4 @@
- /* --- PRELOADER --- */
+/* --- PRELOADER --- */
 .preloader {
     position: fixed;
     top: 0;
@@ -31,24 +31,23 @@
     100% { transform: rotate(360deg); }
 }
 
-
- body, html {
+body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-image: url(../img/login\ student.png);
-        background-size: cover;       /* wypełnia cały ekran */
-    background-position: center;  /* wyśrodkowanie obrazka */
-    background-attachment: fixed; /* opcjonalnie, tło nie przesuwa się przy scrollu */
+    background-image: url(../img/wallpaper.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: #00ff00;
     font-family: "Consolas", "Courier New", monospace;
     overflow: hidden;
-  }
+}
 
 /* --- Ekran logowania --- */
 #loginScreen {
   position: absolute;
-  top: 50%;       /* domyślnie na środku */
+  top: 50%;
   left: 20px;
   transform: translateY(-50%);
   text-align: left;
@@ -93,45 +92,43 @@
 /* --- Dostosowanie dla telefonów --- */
 @media (max-width: 768px) {
   #loginScreen {
-    top: 20px;             /* przy górze ekranu */
-    left: 50%;             /* wyśrodkowane poziomo */
-    transform: translateX(-50%) translateY(0); /* usuń przesunięcie w pionie */
-    width: 90%;            /* szersze na małych ekranach */
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 90%;
     padding: 15px;
   }
 
   .terminal {
-    top: auto;             /* nie nakłada się na login */
-    bottom: 20px;          /* terminal na dole ekranu */
+    top: auto;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
   }
 }
 
-
-
-  /* Terminal */
-  .terminal {
+/* Terminal */
+.terminal {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 90%;
     max-width: 700px;
-    display: none; /* ukryty do czasu logowania */
-  }
+    display: none;
+}
 
-  .line {
+.line {
     white-space: pre-wrap;
     word-wrap: break-word;
     margin-bottom: 5px;
-  }
+}
 
-  .prompt {
-    color: #00ffff; /* kolor promptu */
-  }
+.prompt {
+    color: #00ffff;
+}
 
-  .error {
-    color: #ff4444; /* kolor błędów */
-  }
+.error {
+    color: #ff4444;
+}
