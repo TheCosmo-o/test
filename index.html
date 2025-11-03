@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mój Ruchomy Jeż 🦔</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #fde68a, #fcd34d);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 340px;
+      text-align: center;
+    }
+
+    .hamster {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 10px;
+      animation: hop 2s ease-in-out infinite;
+    }
+
+    @keyframes hop {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .bar {
+      height: 10px;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 8px 0 20px;
+    }
+
+    .fill {
+      height: 100%;
+      background: #fbbf24;
+      width: 50%;
+      transition: width 0.3s;
+    }
+
+    .task {
+      border: 1px solid #ccc;
+      padding: 8px;
+      border-radius: 8px;
+      margin: 6px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .task.done {
+      background: #fef08a;
+      text-decoration: line-through;
+    }
+
+    button {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #d97706;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #78350f;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🦔 Mój Jeż</h1>
+
+    <!-- 🦔 Obrazek chomika -->
+    <div id="hamster" class="hamster">
+      <img id="hamsterImg" src="zdj1.png" alt="Chomik" width="120" height="120" />
+    </div>
+
+    <p>Nastrój: <span id="mood">50</span>/100</p>
+    <div class="bar"><div class="fill" id="bar"></div></div>
+
+    <div id="tasks"></div>
+    <button id="reset">🔄 Nowy dzień</button>
+  </div>
+
+
+  <script>
+    const tasksDefault = [
+      { id: 1, text: "Umyj zęby", done: false },
+      { id: 2, text: "Idź na spacer", done: false },
+      { id: 3, text: "Zrób coś miłego", done: false },
+    ];
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || tasksDefault;
+    let mood = JSON.parse(localStorage.getItem("mood")) || 50;
+
+    const hamsterImg = document.getElementById("hamsterImg");
+    const moodText = document.getElementById("mood");
+    const bar = document.getElementById("bar");
+    const tasksDiv = document.getElementById("tasks");
+
+    function updateHamster() {
+      moodText.textContent = mood;
+      bar.style.width = mood + "%";
+    }
+
+    function renderTasks() {
+      tasksDiv.innerHTML = "";
+      tasks.forEach(t => {
+        const el = document.createElement("div");
+        el.className = "task" + (t.done ? " done" : "");
+        el.textContent = t.text;
+        el.onclick = () => toggleTask(t.id);
+        tasksDiv.appendChild(el);
+      });
+    }
+
+function toggleTask(id) {
+  const task = tasks.find(t => t.id === id);
+  const wasDone = task.done; // zapamiętaj poprzedni stan
+  task.done = !task.done;
+
+  // Jeśli zadanie właśnie zostało ZROBIONE
+  if (!wasDone && task.done) {
+    mood = Math.min(100, mood + 15);
+    showHamsterGif("gif1.gif"); // 🎬 pokaz gif1
+  }
+  // Jeśli zadanie zostało COFNIĘTE
+  else if (wasDone && !task.done) {
+    mood = Math.max(0, mood - 10);
+    showHamsterGif("gif2.gif"); // 🎬 pokaz gif2
+  }
+
+  save();
+  updateHamster();
+  renderTasks();
+}
+
+function showHamsterGif(gif) {
+  hamsterImg.src = gif;
+  setTimeout(() => {
+    hamsterImg.src = "zdj1.png"; // powrót po 2 sekundach
+  }, 2000);
+}
+
+
+    function save() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      localStorage.setItem("mood", JSON.stringify(mood));
+    }
+
+    document.getElementById("reset").onclick = () => {
+      tasks = JSON.parse(JSON.stringify(tasksDefault));
+      mood = 50;
+      save();
+      updateHamster();
+      renderTasks();
+      hamsterImg.src = "zdj1.png";
+    };
+
+    updateHamster();
+    renderTasks();
+  </script>
+</body>
+</html>
