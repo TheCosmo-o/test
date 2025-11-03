@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mój Ruchomy Jeż 🦔</title>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(to bottom, #d6e3b3, #a9c27d); /* zieleń leśna */
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.card {
+  background: #fff8ec;
+  border-radius: 1.5rem;
+  padding: 3rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  width: 500px;       /* większa karta na desktopie */
+  max-width: 95%;
+  text-align: center;
+  border: 2px solid #b17c3a;
+  transition: width 0.3s, padding 0.3s, border-radius 0.3s, box-shadow 0.3s;
+}
+
+/* Mobile: karta na cały ekran */
+@media (max-width: 600px) {
+  .card {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    padding: 2rem;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto; /* przewijanie jeśli dużo zadań */
+  }
+}
+
+.hedgehog img {
+  width: 130px;
+  height: 130px;
+}
+
+@media (max-width: 600px) {
+  .hedgehog img {
+    width: 180px;   /* większy na telefonach, żeby nie zginął na pełnym ekranie */
+    height: 180px;
+  }
+}
+
+  @keyframes sniff {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-4px) rotate(-2deg); }
+    75% { transform: translateY(-4px) rotate(2deg); }
+  }
+
+  .bar {
+    height: 10px;
+    background: #e0d7c2;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 8px 0 20px;
+  }
+
+  .fill {
+    height: 100%;
+    background: linear-gradient(to right, #b17c3a, #d9a05b);
+    width: 50%;
+    transition: width 0.3s;
+  }
+
+  .task {
+    border: 1px solid #c5a670;
+    background: #fffdf6;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 6px 0;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s;
+  }
+
+  .task:hover {
+    background: #f3e6c7;
+  }
+
+  .task.done {
+    background: #d8e3b9;
+    text-decoration: line-through;
+    color: #5b4a27;
+  }
+
+  button {
+    background: #b17c3a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background: #8c5f25;
+  }
+
+  footer {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #5b4a27;
+    opacity: 0.7;
+  }
+
+  .add-task {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  margin-top:10%;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #c5a670;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fffdf6;
+}
+
+.add-task input:focus {
+  outline: none;
+  border-color: #b17c3a;
+  box-shadow: 0 0 4px #d9a05b;
+}
+
+.add-task button {
+  background: #b17c3a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.add-task button:hover {
+  background: #8c5f25;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #8c5f25;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.delete-btn:hover {
+  color: #b91c1c; /* czerwony przy najechaniu */
+}
+
+</style>
+
+</head>
+<body>
+  <div class="card">
+    <h1>🦔 Stefek 🦔 </h1>
+
+    <!-- 🦔 Obrazek chomika -->
+    <div id="hamster" class="hamster">
+      <img id="hamsterImg" src="zdj1.png" alt="Chomik" width="120" height="120" />
+    </div>
+
+    <p>Nastrój: <span id="mood">0</span>/100</p>
+    <div class="bar"><div class="fill" id="bar"></div></div>
+
+    <div id="tasks"></div>
+    <button id="reset">🔄 Nowy dzień</button> <br>
+
+    <div class="add-task">
+  <input id="newTaskText" type="text" placeholder="✏️ Nowe zadanie..." />
+  <button id="addTask">➕ Dodaj</button>
+</div>
+
+  </div>
+
+
+  <script>
+ // --- DOMYŚLNE ZADANIA ---
+const tasksDefault = [
+  { id: 1, text: "Umyj zęby", done: false },           // prosta codzienna czynność
+  { id: 2, text: "Napij się wody", done: false },     // drobna potrzeba fizyczna
+  { id: 3, text: "Zrób 1 głęboki oddech", done: false }, // mindfulness
+  { id: 4, text: "Posłuchaj ulubionej muzyki", done: false }, // mała przyjemność
+  { id: 5, text: "Zrób mały spacer lub wyjrzyj za okno", done: false }, // lekki ruch
+  { id: 6, text: "Napisz 1 pozytywną rzecz o sobie", done: false }, // self-compassion
+];
+
+// --- INICJALIZACJA ---
+let tasks = JSON.parse(localStorage.getItem("tasks")) || tasksDefault;
+
+// Poprawne pobieranie mood z localStorage, start od 0
+let savedMood = localStorage.getItem("mood");
+let mood = savedMood !== null ? JSON.parse(savedMood) : 0;
+
+const hamsterImg = document.getElementById("hamsterImg");
+const moodText = document.getElementById("mood");
+const bar = document.getElementById("bar");
+const tasksDiv = document.getElementById("tasks");
+
+// --- FUNKCJE ---
+function updateHamster() {
+  moodText.textContent = mood;
+  bar.style.width = mood + "%";
+}
+
+function save() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("mood", JSON.stringify(mood));
+}
+
+// Renderowanie listy zadań
+function renderTasks() {
+  tasksDiv.innerHTML = "";
+  tasks.forEach(t => {
+    const el = document.createElement("div");
+    el.className = "task" + (t.done ? " done" : "");
+
+    const text = document.createElement("span");
+    text.textContent = t.text;
+    text.onclick = () => toggleTask(t.id);
+
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "❌";
+    delBtn.className = "delete-btn";
+    delBtn.onclick = (e) => {
+      e.stopPropagation(); // nie odznacza zadania
+      deleteTask(t.id);
+    };
+
+    el.appendChild(text);
+    el.appendChild(delBtn);
+    tasksDiv.appendChild(el);
+  });
+}
+
+// Odtwarzanie gifów przy zmianie statusu zadania
+function showHamsterGif(gif) {
+  hamsterImg.src = gif;
+  setTimeout(() => {
+    hamsterImg.src = "zdj1.png";
+  }, 2000);
+}
+
+// Zaznaczanie/odznaczanie zadania i zmiana nastroju
+function toggleTask(id) {
+  const task = tasks.find(t => t.id === id);
+  const wasDone = task.done;
+  task.done = !task.done;
+
+  if (!wasDone && task.done) {
+    mood = Math.min(100, mood + 15);
+    showHamsterGif("gif1.gif");
+  } else if (wasDone && !task.done) {
+    mood = Math.max(0, mood - 15);
+    showHamsterGif("gif2.gif");
+  }
+
+  save();
+  updateHamster();
+  renderTasks();
+}
+
+// Usuwanie zadania
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  save();
+  renderTasks();
+}
+
+// Dodawanie nowego zadania
+document.getElementById("addTask").onclick = () => {
+  const input = document.getElementById("newTaskText");
+  const text = input.value.trim();
+  if (text === "") return;
+
+  const newTask = {
+    id: Date.now(),
+    text: text,
+    done: false
+  };
+
+  tasks.push(newTask);
+  save();
+  renderTasks();
+  input.value = "";
+};
+
+// Dodawanie przez Enter
+document.getElementById("newTaskText").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    document.getElementById("addTask").click();
+  }
+});
+
+// Resetowanie „Nowy dzień”
+document.getElementById("reset").onclick = () => {
+  // Odznaczamy tylko domyślne zadania
+  tasks = tasks.map(t => {
+    const defaultTask = tasksDefault.find(dt => dt.id === t.id);
+    if (defaultTask) {
+      return { ...t, done: false };
+    } else {
+      return t; // zadania dodane przez użytkownika zostają
+    }
+  });
+
+  mood = 0; // reset nastroju do zera
+  save();
+  updateHamster();
+  renderTasks();
+  hamsterImg.src = "zdj1.png";
+};
+
+// --- URUCHOMIENIE ---
+updateHamster();
+renderTasks();
+
+
+  </script>
+</body>
+</html>
