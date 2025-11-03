@@ -17,7 +17,7 @@ body {
 }
 
 .card {
-  background: #ffffff; /* zmieniono tło na białe */
+  background: #fff8ec;
   border-radius: 1.5rem;
   padding: 3rem;
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
@@ -31,7 +31,8 @@ body {
 @media (max-width: 600px) {
   .card {
     width: 100%;
-    height: 100vh;
+    height: auto; /* lepiej dopasowuje się do zawartości */
+    min-height: 100vh;
     border-radius: 0;
     padding: 2rem;
     box-shadow: none;
@@ -54,26 +55,106 @@ body {
   }
 }
 
-.bar { height: 10px; background: #e0d7c2; border-radius: 10px; overflow: hidden; margin: 8px 0 20px; }
-.fill { height: 100%; background: linear-gradient(to right, #b17c3a, #d9a05b); width: 50%; transition: width 0.3s; }
+/* Pasek nastroju */
+.bar {
+  height: 16px; /* zwiększona wysokość dla lepszej widoczności na telefonach */
+  background: #e0d7c2;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 12px 0 20px;
+  width: 100%; /* pełna szerokość */
+}
 
-.task { border: 1px solid #c5a670; background: #fffdf6; padding: 8px; border-radius: 8px; margin: 6px 0; cursor: pointer; user-select: none; transition: background 0.3s; display: flex; justify-content: space-between; align-items: center; }
+.fill {
+  height: 100%;
+  background: linear-gradient(to right, #b17c3a, #d9a05b);
+  width: 50%; /* domyślny stan */
+  transition: width 0.3s;
+}
+
+/* Zadania */
+.task {
+  border: 1px solid #c5a670;
+  background: #fffdf6;
+  padding: 8px;
+  border-radius: 8px;
+  margin: 6px 0;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .task:hover { background: #f3e6c7; }
 .task.done { background: #d8e3b9; text-decoration: line-through; color: #5b4a27; }
 
-button { background: #b17c3a; color: white; border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+/* Przycisk ogólny */
+button {
+  background: #b17c3a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
 button:hover { background: #8c5f25; }
 
-.add-task { display: flex; gap: 6px; margin-bottom: 14px; margin-top:10%; }
-.add-task input { flex: 1; padding: 8px; border: 1px solid #c5a670; border-radius: 8px; font-size: 0.9rem; background: #fffdf6; }
-.add-task input:focus { outline: none; border-color: #b17c3a; box-shadow: 0 0 4px #d9a05b; }
-.add-task button { background: #b17c3a; color: white; border: none; border-radius: 8px; padding: 8px 10px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+/* Dodawanie zadania */
+.add-task {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  margin-top: 10%;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #c5a670;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fffdf6;
+}
+
+.add-task input:focus {
+  outline: none;
+  border-color: #b17c3a;
+  box-shadow: 0 0 4px #d9a05b;
+}
+
+.add-task button {
+  background: #b17c3a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
 .add-task button:hover { background: #8c5f25; }
 
-.delete-btn { background: none; border: none; color: #8c5f25; font-size: 1rem; cursor: pointer; transition: color 0.2s; }
+/* Przycisk usuwania */
+.delete-btn {
+  background: none;
+  border: none;
+  color: #8c5f25;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
 .delete-btn:hover { color: #b91c1c; }
 
-#moodChart { margin-top: 20px; max-width: 100%; height: 150px; }
+/* Wykres */
+#moodChart {
+  margin-top: 20px;
+  max-width: 100%;
+  height: 150px;
+}
 
 </style>
 </head>
