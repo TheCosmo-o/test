@@ -260,8 +260,8 @@ function toggleTask(id) {
   const wasDone = task.done;
   task.done = !task.done;
 
-  if (!wasDone && task.done) { mood = Math.min(100, mood + 15); showHamsterGif("gif1.gif"); }
-  else if (wasDone && !task.done) { mood = Math.max(0, mood - 15); showHamsterGif("gif2.gif"); }
+  if (!wasDone && task.done) { mood = Math.min(100, mood + 5); showHamsterGif("gif1.gif"); }
+  else if (wasDone && !task.done) { mood = Math.max(0, mood - 5); showHamsterGif("gif2.gif"); }
 
   save();
   updateHamster();
