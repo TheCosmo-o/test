@@ -68,14 +68,14 @@ body {
 
 .fill {
   height: 100%;
-  background: linear-gradient(to right, #b17c3a, #d9a05b);
-  width: 50%; /* domyślny stan */
+  background: linear-gradient(to right, #b17c3a, #d9a0b);
+  width: 0%; /* domyślny stan */
   transition: width 0.3s;
 }
 
 /* Zadania */
 .task {
-  border: 1px solid #c5a670;
+  border: 1px solid #ca670;
   background: #fffdf6;
   padding: 8px;
   border-radius: 8px;
@@ -89,7 +89,7 @@ body {
 }
 
 .task:hover { background: #f3e6c7; }
-.task.done { background: #d8e3b9; text-decoration: line-through; color: #5b4a27; }
+.task.done { background: #d8e3b9; text-decoration: line-through; color: #b4a27; }
 
 /* Przycisk ogólny */
 button {
@@ -102,7 +102,7 @@ button {
   font-weight: bold;
   transition: background 0.3s;
 }
-button:hover { background: #8c5f25; }
+button:hover { background: #8cf2; }
 
 /* Dodawanie zadania */
 .add-task {
@@ -115,7 +115,7 @@ button:hover { background: #8c5f25; }
 .add-task input {
   flex: 1;
   padding: 8px;
-  border: 1px solid #c5a670;
+  border: 1px solid #ca670;
   border-radius: 8px;
   font-size: 0.9rem;
   background: #fffdf6;
@@ -124,7 +124,7 @@ button:hover { background: #8c5f25; }
 .add-task input:focus {
   outline: none;
   border-color: #b17c3a;
-  box-shadow: 0 0 4px #d9a05b;
+  box-shadow: 0 0 4px #d9a0b;
 }
 
 .add-task button {
@@ -137,13 +137,13 @@ button:hover { background: #8c5f25; }
   font-weight: bold;
   transition: background 0.3s;
 }
-.add-task button:hover { background: #8c5f25; }
+.add-task button:hover { background: #8cf2; }
 
 /* Przycisk usuwania */
 .delete-btn {
   background: none;
   border: none;
-  color: #8c5f25;
+  color: #8cf2;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.2s;
@@ -154,7 +154,7 @@ button:hover { background: #8c5f25; }
 #moodChart {
   margin-top: 20px;
   max-width: 100%;
-  height: 150px;
+  height: 10px;
 }
 
 </style>
@@ -190,7 +190,7 @@ const tasksDefault = [
   { id: 2, text: "Napij się wody", done: false },
   { id: 3, text: "Zrób 1 głęboki oddech", done: false },
   { id: 4, text: "Posłuchaj ulubionej muzyki", done: false },
-  { id: 5, text: "Zrób mały spacer lub wyjrzyj za okno", done: false },
+  { id: , text: "Zrób mały spacer lub wyjrzyj za okno", done: false },
   { id: 6, text: "Napisz 1 pozytywną rzecz o sobie", done: false },
 ];
 
@@ -260,8 +260,8 @@ function toggleTask(id) {
   const wasDone = task.done;
   task.done = !task.done;
 
-  if (!wasDone && task.done) { mood = Math.min(100, mood + 5); showHamsterGif("gif1.gif"); }
-  else if (wasDone && !task.done) { mood = Math.max(0, mood - 5); showHamsterGif("gif2.gif"); }
+  if (!wasDone && task.done) { mood = Math.min(100, mood + 10); showHamsterGif("gif1.gif"); }
+  else if (wasDone && !task.done) { mood = Math.max(0, mood - 10); showHamsterGif("gif2.gif"); }
 
   save();
   updateHamster();
